@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+
+  web:
+    image: 'robobeerun/gitlab-ce:latest'
+    hostname: 'localhost'
+    environment:
+      DEBUG: "true"
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
+    ports:
+      - '2222:22'
+    volumes:
+      - './root/gitlab/config:/etc/gitlab'
+      - './root/gitlab/logs:/var/log/gitlab'
+      - './root/gitlab/data:/var/opt/gitlab'
+      - './root/gitlab/public:/opt/gitlab/embedded/service/gitlab-rails/public'
+
+  nginx:
+    image: erwin82/nginx:latest
+    ports:
+      - 8080:8080
+    links:
+      - web
+    volumes:
+      - "./nginx-in:/nginx-in"
+      - "./root/gitlab/public:/opt/gitlab/embedded/service/gitlab-rails/public"
+      - './root/gitlab/data:/var/opt/gitlab'
