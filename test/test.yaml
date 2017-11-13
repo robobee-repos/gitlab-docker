@@ -10,6 +10,9 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://localhost'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
+        nginx['enable'] = false
+        gitlab_workhorse['listen_network'] = "tcp"
+        gitlab_workhorse['listen_addr'] = "0.0.0.0:8181"
     ports:
       - '2222:22'
     volumes:
