@@ -1,6 +1,6 @@
 REPOSITORY := robobeerun
 NAME := gitlab-ce
-VERSION ?= v10.1.2-ce.0-r1-1
+VERSION ?= v10.1.2-ce.0-r1
 
 build: _build ##@targets Builds the docker image.
 
